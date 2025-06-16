@@ -36,9 +36,9 @@ public class Kniha {
        final StringBuilder sb = new StringBuilder();
        sb.append(autor);
        sb.append(" ");
+        sb.append(": ");
        sb.append(nazev);
        sb.append(" ");
-       sb.append(rokVydani);
        return sb.toString();
 
 
