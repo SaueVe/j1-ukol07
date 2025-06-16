@@ -7,8 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 public class KnihaSluzba {
@@ -18,19 +21,16 @@ public class KnihaSluzba {
 
     public KnihaSluzba() {
         try (InputStream inputStream = KnihaSluzba.class.getResourceAsStream("knihy.json")) {
-            knihy = objectMapper.readValue(inputStream, new TypeReference<List<Kniha>>(){});
-              // zkusit sout
+            knihy = objectMapper.readValue(inputStream, new TypeReference<List<Kniha>>() {});
         } catch (FileNotFoundException ex) {
             System.err.println("Soubor nenalezen.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return;
     }
 
 
     public List<String> seznamKnih() {
-
         return knihy
                 .stream()
                 .map(Kniha::getNazev)
@@ -38,108 +38,22 @@ public class KnihaSluzba {
 
     }
 
-    public List<String> seznamVroce(int rokVydani) {
-        if(knihy
-                .stream()
-                .filter(kniha -> kniha.getRokVydani() == rokVydani)
-                .toList().isEmpty()){
-            System.out.println("V databázi nejsou žádné knihy z tohoto roku.");
-
-        } else knihy
-                .stream()
-                .filter(kniha -> kniha.getRokVydani() == rokVydani)
-                .toList()
-                .forEach(kniha -> System.out.printf("%s: %s", kniha.getAutor(), kniha.getNazev()).println());
-
-        return List.of();
-    }
-
-
-
     public List<String> seznamKnihAutora(String autor) {
-        List<String> seznamA = knihy
+        Optional<List<String>> seznamA = Optional.of(knihy
                 .stream()
                 .filter(kniha -> kniha.getAutor().equals(autor))
                 .map(Kniha::getNazev)
-                .toList();
-        if (seznamA.isEmpty()) {
-            System.out.println("V databázi nejsou žádné knihy od tohoto autora.");
-        }
-        return seznamA;
+                .toList());
+        return seznamA.get();
     }
 
-   /* public void List<String> seznamKnihVRoce(int rokVydani){
-        knihy
+    public List<String> seznamVRoce(int rokVydani) {
+
+        Optional<List<String>> knihyVR = Optional.of(knihy
                 .stream()
                 .filter(kniha -> kniha.getRokVydani() == rokVydani)
-                .toList()
-                .forEach(kniha -> System.out.printf("%s: %s", kniha.getAutor(), kniha.getNazev()).println());
-
-
-        if (knihy
-                .stream()
-                .filter(kniha -> kniha.getRokVydani() == rokVydani)
-                .toList()
-                .forEach(kniha -> System.out.printf("%s: %s", kniha.getAutor(), kniha.getNazev()).println())){
-
-        }
-        return seznamV;
-    }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public List<String> seznamKnihVRoce(int rokVydani) {
-            List<String> seznamV = knihy
-                    .stream()
-                    .filter(kniha -> kniha.getRokVydani()==(rokVydani))
-                    .toList()
-                    .forEach(kniha -> System.out.printf("%s: %s", kniha.getAutor(),kniha.getNazev()).println());
-            return seznamV;
-    }*/
-
- //   public List
-
-
-  /*  public List<Kniha> knihy() {
-        try (FileInputStream inputStream = new FileInputStream(KnihaSluzba.class.getResourceAsStream("knihy.json").toString())) {
-            objectMapper.readValue(inputStream, new TypeReference<List<Kniha>>(){});
-        } catch (FileNotFoundException ex) {
-            System.err.println("Soubor nenalezen.");
-            return null;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return knihy;
+                .map(Kniha::toString)
+                .toList());
+        return knihyVR.get();
     }
-
-    public Stream <String> seznamKnih() {
-        return knihy;
-
-    }*/
-
-
-
-
-
-    // KnihaSluzba.class.getResourceAsStream("knihy.json");
-
- //   objectMapper.readValue(inputStream, new TypeReference<List<Kniha>>(){});
-
-    /*try (InputStream inputStream = Files.newInputStream(path)) {
-        // kód, ve kterém může vypadnout výjimka
-    }*/
-
-    //   Path path = Path.of("src/main/resources/cz.czechitas.ukol07/knihy.json");
-
-//       try(FileInputStream inputStream = (FileInputStream) KnihaSluzba.class.getResourceAsStream("knihy.json")) {
 }

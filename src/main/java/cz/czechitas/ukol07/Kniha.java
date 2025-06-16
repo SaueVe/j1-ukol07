@@ -33,13 +33,11 @@ public class Kniha {
     }
 
     public String toString() {
-       final StringBuilder sb = new StringBuilder();
-       sb.append(autor);
-       sb.append(" ");
+        final StringBuilder sb = new StringBuilder();
+        sb.append(autor);
         sb.append(": ");
-       sb.append(nazev);
-       sb.append(" ");
-       return sb.toString();
+        sb.append(nazev);
+        return sb.toString();
 
 
     }
