@@ -38,6 +38,24 @@ public class KnihaSluzba {
 
     }
 
+    public List<String> seznamVroce(int rokVydani) {
+        if(knihy
+                .stream()
+                .filter(kniha -> kniha.getRokVydani() == rokVydani)
+                .toList().isEmpty()){
+            System.out.println("V databázi nejsou žádné knihy z tohoto roku.");
+
+        } else knihy
+                .stream()
+                .filter(kniha -> kniha.getRokVydani() == rokVydani)
+                .toList()
+                .forEach(kniha -> System.out.printf("%s: %s", kniha.getAutor(), kniha.getNazev()).println());
+
+        return List.of();
+    }
+
+
+
     public List<String> seznamKnihAutora(String autor) {
         List<String> seznamA = knihy
                 .stream()
@@ -50,17 +68,23 @@ public class KnihaSluzba {
         return seznamA;
     }
 
-    public void List<String> seznamKnihVRoce(int rokVydani){
-        List<String> seznamV=knihy
+   /* public void List<String> seznamKnihVRoce(int rokVydani){
+        knihy
                 .stream()
-                .filter(kniha -> kniha.getRokVydani()==rokVydani)
+                .filter(kniha -> kniha.getRokVydani() == rokVydani)
                 .toList()
                 .forEach(kniha -> System.out.printf("%s: %s", kniha.getAutor(), kniha.getNazev()).println());
-        if (seznamV.isEmpty()){
+
+
+        if (knihy
+                .stream()
+                .filter(kniha -> kniha.getRokVydani() == rokVydani)
+                .toList()
+                .forEach(kniha -> System.out.printf("%s: %s", kniha.getAutor(), kniha.getNazev()).println())){
 
         }
         return seznamV;
-    }
+    }*/
 
 
 

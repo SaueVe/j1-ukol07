@@ -24,7 +24,7 @@ public class Aplikace {
 
       //  knihaSluzba.seznamKnihVRoce(1845).toString()
 
-        System.out.println(knihaSluzba.seznamKnihVRoce(1845));
+        System.out.println(knihaSluzba.seznamVroce(1845));
 
       //  List kniha = knihaSluzba.seznamKnihVRoce(1845);
 
